@@ -1,0 +1,67 @@
+{
+    "typeName": "Zugzwang::NativeCloudDirectory::PublishedSchema",
+    "description": "A schema that is finalized and ready for use in a directory.",
+    "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+    "definitions": {
+    },
+    "properties": {
+        "Name": {
+            "description": "The new name under which the schema will be published.",
+            "type": "string"
+        },
+        "DevelopmentSchemaArn": {
+            "description": "The Amazon Resource Name (ARN) that is associated with the development schema.",
+            "type": "string"
+        },
+        "Version": {
+            "description": "The title of the TPS report is a mandatory element.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9._-]*$",
+            "minLength": 1,
+            "maxLength": 10
+        },
+        "MinorVersion": {
+            "description": "The minor version under which the schema will be published. This parameter is recommended. Schemas have both a major and minor version associated with them.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9._-]*$",
+            "minLength": 1,
+            "maxLength": 10
+        },
+        "PublishedSchemaArn": {
+            "description": "The arn of the published schema.",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "Name",
+        "DevelopmentSchemaArn",
+        "Version",
+        "MinorVersion"
+    ],
+    "readOnlyProperties": [
+        "/properties/PublishedSchemaArn"
+    ],
+    "primaryIdentifier": [
+        "/properties/PublishedSchemaArn"
+    ],
+    "handlers": {
+        "create": {
+            "permissions": [
+                "clouddirectory:PublishSchema"
+            ]
+        },
+        "read": {
+            "permissions": [
+                "cloudwatch:PutMetricData",
+                "clouddirectory:ListPublishedSchemas"
+            ]
+        },
+        "delete": {
+            "permissions": [
+                "cloudwatch:PutMetricData",
+                "clouddirectory:DeleteSchema"
+            ]
+        }
+    }
+}

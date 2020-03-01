@@ -1,0 +1,62 @@
+{
+    "typeName": "Zugzwang::NativeCloudDirectory::CloudDirectory",
+    "description": "A hierarchical serverless datastore.",
+    "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+    "definitions": {
+    },
+    "properties": {
+        "PublishedSchemaArn": {
+            "description": "The published schema arn to use.",
+            "type": "string"
+        },
+        "Name": {
+            "description": "The name of the directory to create.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9._-]*$",
+            "minLength": 1,
+            "maxLength": 64
+        },
+        "AppliedSchemaArn": {
+            "description": "The name of the applied schema.",
+            "type": "string"
+        },
+        "DirectoryArn": {
+            "description": "The ARN of the created directory",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "PublishedSchemaArn",
+        "Name"
+    ],
+    "readOnlyProperties": [
+        "/properties/AppliedSchemaArn",
+        "/properties/DirectoryArn"
+    ],
+    "primaryIdentifier": [
+        "/properties/DirectoryArn"
+    ],
+    "handlers": {
+        "create": {
+            "permissions": [
+                "cloudwatch:PutMetricData",
+                "clouddirectory:CreateDirectory"
+            ]
+        },
+        "delete": {
+            "permissions": [
+                "cloudwatch:PutMetricData",
+                "clouddirectory:DisableDirectory",
+                "clouddirectory:DeleteDirectory"
+            ]
+        },
+        "read": {
+            "permissions": [
+                "cloudwatch:PutMetricData",
+                "clouddirectory:ListDirectories",
+                "clouddirectory:ListAppliedSchemaArns"
+            ]
+        }
+    }
+}

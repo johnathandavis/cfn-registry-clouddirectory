@@ -1,0 +1,15 @@
+{
+    "typeName": "Zugzwang::NativeCloudDirectory::CloudDirectory",
+    "language": "java",
+    "runtime": "java8",
+    "entrypoint": "io.zugzwang.nativeclouddirectory.clouddirectory.HandlerWrapper::handleRequest",
+    "testEntrypoint": "io.zugzwang.nativeclouddirectory.clouddirectory.HandlerWrapper::testEntrypoint",
+    "settings": {
+        "namespace": [
+            "io",
+            "zugzwang",
+            "nativeclouddirectory",
+            "clouddirectory"
+        ]
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "typeName": "Zugzwang::NativeCloudDirectory::Index",
+    "description": "An index to accelerate searching for certain properties.",
+    "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+    "definitions": {
+        "Attribute": {
+            "type": "object",
+            "properties": {
+                "FacetName": {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9._-]*$",
+                    "minLength": 1,
+                    "maxLength": 64
+                },
+                "Name": {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9._:-]*$",
+                    "minLength": 1,
+                    "maxLength": 230
+                },
+                "SchemaArn": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "FacetName",
+                "Name",
+                "SchemaArn"
+            ]
+        }
+    },
+    "properties": {
+        "DirectoryArn": {
+            "description": "The directory to add the index to.",
+            "type": "string"
+        },
+        "LinkName": {
+            "description": "The name of the link between the parent object and the index object.",
+            "type": "string",
+            "pattern": "[^\\/\\[\\]\\(\\):\\{\\}#@!?\\s\\\\;]+",
+            "minLength": 1,
+            "maxLength": 64
+        },
+        "IsUnique": {
+            "description": "Indicates whether the attribute that is being indexed has unique values or not.",
+            "type": "boolean"
+        },
+        "OrderedIndexedAttributes": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "#/definitions/Attribute"
+            }
+        },
+        "ParentReference": {
+            "type": "string"
+        },
+        "IndexObjectIdentifier": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "DirectoryArn",
+        "IsUnique",
+        "OrderedIndexedAttributes"
+    ],
+    "readOnlyProperties": [
+        "/properties/IndexObjectIdentifier"
+    ],
+    "primaryIdentifier": [
+        "/properties/IndexObjectIdentifier"
+    ],
+    "handlers": {
+        "create": {
+            "permissions": [
+                "cloudwatch:PutMetricData",
+                "clouddirectory:CreateIndex"
+            ]
+        },
+        "read": {
+            "permissions": [
+                "cloudwatch:PutMetricData"
+            ]
+        },
+        "delete": {
+            "permissions": [
+                "cloudwatch:PutMetricData"
+            ]
+        }
+    }
+}

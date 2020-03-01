@@ -1,0 +1,68 @@
+{
+    "typeName": "Zugzwang::NativeCloudDirectory::DevelopmentSchema",
+    "description": "A schema that can be modified before publishing and attaching to a directory.",
+    "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+    "definitions": {
+    },
+    "properties": {
+        "SchemaName": {
+            "description": "Name of the schema.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9._-]*$",
+            "minLength": 1,
+            "maxLength": 32
+        },
+        "SchemaBucketName": {
+            "description": "The name of the S3 bucket containing the schema.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 250
+        },
+        "SchemaKey": {
+            "description": "The location of the S3 bucket containing the schema.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+        },
+        "DevelopmentSchemaArn": {
+            "description": "The ARN of the created schema.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "SchemaName",
+        "SchemaBucketName",
+        "SchemaKey"
+    ],
+    "readOnlyProperties": [
+        "/properties/DevelopmentSchemaArn"
+    ],
+    "primaryIdentifier": [
+        "/properties/DevelopmentSchemaArn"
+    ],
+    "handlers": {
+        "create": {
+            "permissions": [
+                "cloudwatch:PutMetricData",
+                "s3:GetObject",
+                "clouddirectory:PutSchemaFromJson",
+                "clouddirectory:CreateSchema"
+            ]
+        },
+        "read": {
+            "permissions": [
+                "cloudwatch:PutMetricData",
+                "clouddirectory:GetSchemaAsJson"
+            ]
+        },
+        "delete": {
+            "permissions": [
+                "cloudwatch:PutMetricData",
+                "clouddirectory:DeleteSchema"
+            ]
+        }
+    }
+}
